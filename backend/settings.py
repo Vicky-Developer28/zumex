@@ -77,7 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.Security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'Whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -157,7 +157,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
-STATICFILES_STORAGE = "hitenoise.strorage.CompressedMainfestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.strorage.CompressedMainfestStaticFilesStorage"
 
 # Base url to serve media files
 MEDIA_URL = 'media/'
