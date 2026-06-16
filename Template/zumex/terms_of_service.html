@@ -1,0 +1,172 @@
+{% extends 'zumex/base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none"></div>
+
+<main class="pt-32 pb-section-gap">
+    <section class="max-w-content-width mx-auto px-page-margin text-center mb-section-gap">
+        <h1 class="font-display-lg text-display-lg text-on-surface mb-4">Terms of Service</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Understand your rights, our services, and responsibilities when using Zumex.</p>
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full border border-glass">
+            <span class="material-symbols-outlined text-primary text-sm">event</span>
+            <span class="font-label-caps text-label-caps uppercase text-secondary">Last Updated: June 2026</span>
+        </div>
+    </section>
+
+    <div class="max-w-[1200px] mx-auto px-page-margin grid lg:grid-cols-[250px_1fr] gap-12">
+        <aside class="sticky top-28 left-14 h-fit hidden lg:flex flex-col gap-6 py-8">
+            <div class="ml-8 my-8">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">Legal Center</h3>
+                <p class="text-on-surface-variant text-sm">Terms of Service</p>
+            </div>
+            <nav class="flex flex-col gap-4">
+                <a class="border-l-2 pl-4 transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3 text-primary font-bold border-primary" href="#about-us">
+                    <span class="material-symbols-outlined text-lg">groups</span> ABOUT US
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="#our-services">
+                    <span class="material-symbols-outlined text-lg">design_services</span> OUR SERVICES
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="#terms-of-use">
+                    <span class="material-symbols-outlined text-lg">gavel</span> TERMS OF USE
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="#liability">
+                    <span class="material-symbols-outlined text-lg">shield</span> LIABILITY
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="{% url 'zumex:privacy_policy' %}"> 
+                    <span class="material-symbols-outlined text-lg">info</span> PRIVACY POLICY
+                </a>
+            </nav>
+            <div class="mt-12 glass-card p-6 rounded-xl space-y-4">
+                <p class="font-headline-sm text-[18px] text-on-surface">Need Help?</p>
+                <div class="space-y-2">
+                    <a class="flex items-center gap-2 text-primary hover:underline text-sm font-body-md" href="mailto:zumexteam26@gmail.com">
+                        <span class="material-symbols-outlined text-sm">mail</span> zumexteam26@gmail.com
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="max-w-content-width space-y-section-gap left-16">
+            <article class="space-y-12 ml-8">
+                
+                <header class="scroll-mt-32" id="about-us">
+                    <h2 class="font-headline-md text-headline-md text-secondary my-6">1. About Us</h2>
+                    <div class="glass-card inner-glow p-8 rounded-2xl space-y-4">
+                        <p class="text-on-surface-variant font-bold text-lg">Welcome to Zumex.</p>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            Zumex is a freelance team dedicated to helping individuals, creators, startups, and businesses establish and grow their digital presence. We combine creativity, technology, and strategic thinking to deliver professional digital solutions tailored to the unique needs of every client.
+                        </p>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            Our mission is to provide high-quality, reliable, and affordable digital services while maintaining a strong focus on innovation, professionalism, and customer satisfaction. Whether you are launching a new business, building a personal brand, or expanding your online reach, Zumex is committed to helping you achieve your goals through customized digital solutions.
+                        </p>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            We believe every brand has a story worth sharing, and our goal is to help bring that story to life through effective design, modern technology, and impactful digital experiences.
+                        </p>
+                    </div>
+                </header>
+
+                <section class="scroll-mt-32 space-y-6" id="our-services">
+                    <h2 class="font-headline-md text-headline-md text-secondary mb-6">2. Our Services</h2>
+                    
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">web</span> Website Development
+                        </h3>
+                        <p class="text-on-surface-variant">Zumex specializes in developing modern, responsive, and user-friendly websites that help businesses and individuals establish a strong online presence. We focus on creating websites that are visually appealing, easy to navigate, mobile-friendly, and optimized for performance. Whether you need a business website, portfolio website, landing page, or custom web solution, our team works closely with you to create a website that reflects your brand and supports your goals.</p>
+                    </div>
+
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">brush</span> Poster Designing
+                        </h3>
+                        <p class="text-on-surface-variant">Our poster design services are focused on creating visually compelling designs that effectively communicate your message. We design posters for promotions, events, product launches, marketing campaigns, social media content, and brand awareness initiatives. Every design is crafted with attention to detail, creativity, and brand consistency to ensure maximum impact and audience engagement.</p>
+                    </div>
+
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">campaign</span> Social Media Management
+                        </h3>
+                        <p class="text-on-surface-variant">Zumex helps businesses and creators build a strong and professional presence across social media platforms. Our social media management services include content planning, content creation, account management, audience engagement, and growth strategies. We work to maintain a consistent brand identity while creating meaningful content that increases visibility, strengthens audience relationships, and supports long-term digital growth.</p>
+                    </div>
+                </section>
+
+                <section class="scroll-mt-32 space-y-6" id="terms-of-use">
+                    <h2 class="font-headline-md text-headline-md text-secondary mb-6">3. Terms of Use</h2>
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">3.1 Acceptance of Terms</h3>
+                        <p class="text-on-surface-variant">These Terms of Service ("Terms") govern your access to and use of Zumex's digital services. By engaging with our services, you enter into a legally binding agreement and indicate full acceptance of these terms.</p>
+                    </div>
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+</form>
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">3.2 Client Responsibilities</h3>
+                        <p class="text-on-surface-variant">You are responsible for providing accurate information, brand assets, and feedback required for the timely execution of services. Prohibited actions include requesting designs or services for illegal activities, or attempting to bypass agreed-upon service scopes.</p>
+                    </div>
+                    <div class="scroll-mt-32 glass-card inner-glow p-8 rounded-2xl bg-error-container/10 border-error/20" id="liability">
+                        <h3 class="font-headline-sm text-headline-sm text-error mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined">warning</span> 3.3 Limitation of Liability
+                        </h3>
+                        <p class="text-on-surface-variant">To the maximum extent permitted by law, Zumex shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly resulting from the use of our services.</p>
+                    </div>
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">3.4 Governing Law</h3>
+                        <p class="text-on-surface-variant">These terms are governed by the laws of <strong>India</strong>. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the courts located in Mumbai, Maharashtra.</p>
+                    </div>
+                </section>
+            </article>
+
+            <section class="glass-card p-12 rounded-3xl text-center relative overflow-hidden mt-12">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">contact_support</span>
+                </div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Ready to start a project?</h3>
+                <p class="text-on-surface-variant mb-8 max-w-lg mx-auto">Contact us to learn how we can help elevate your digital presence.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <a class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95" href="{% url 'zumex:index' %}#contact">
+                        <span class="material-symbols-outlined">mail</span> contact
+                    </a>
+                    <a class="border border-glass hover:bg-white/5 px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95" href="#" onclick="window.print(); return false;">
+                        <span class="material-symbols-outlined">print</span> Print Terms
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Intersection Observer for Active Nav
+    const sections = document.querySelectorAll('header[id], section[id], div[id]');
+    const navLinks = document.querySelectorAll('aside nav a[href^="#"]'); 
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('text-primary', 'font-bold', 'border-primary');
+            link.classList.add('text-on-surface-variant', 'border-transparent');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('text-primary', 'font-bold', 'border-primary');
+                link.classList.remove('text-on-surface-variant', 'border-transparent');
+            }
+        });
+    });
+
+    // Micro-interaction for Glass Cards
+    document.querySelectorAll('.glass-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'zumex/base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none"></div>
+
+<main class="pt-32 pb-section-gap">
+    <section class="max-w-content-width mx-auto px-page-margin text-center mb-section-gap">
+        <h1 class="font-display-lg text-display-lg text-on-surface mb-4">Privacy Policy</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Your privacy, security, and trust are important to Zumex.</p>
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full border border-glass">
+            <span class="material-symbols-outlined text-primary text-sm">event</span>
+            <span class="font-label-caps text-label-caps uppercase text-secondary">Last Updated: June 2026</span>
+        </div>
+    </section>
+
+    <div class="max-w-[1200px] mx-auto px-page-margin grid lg:grid-cols-[250px_1fr] gap-12">
+        <aside class="sticky top-28 left-14 h-fit hidden lg:flex flex-col gap-6 py-8">
+            <div class="mb-4">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">Legal Center</h3>
+                <p class="text-on-surface-variant text-sm">Privacy Policy</p>
+            </div>
+            <nav class="flex flex-col gap-4">
+                <a class="border-l-2 pl-4 transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3 text-primary font-bold border-primary" href="#information-we-collect">
+                    <span class="material-symbols-outlined text-lg">database</span> DATA COLLECTION
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="#how-we-use">
+                    <span class="material-symbols-outlined text-lg">analytics</span> DATA USAGE
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="#data-protection">
+                    <span class="material-symbols-outlined text-lg">shield</span> PROTECTION
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="#your-rights">
+                    <span class="material-symbols-outlined text-lg">fingerprint</span> YOUR RIGHTS
+                </a>
+                <a class="text-on-surface-variant border-l-2 border-transparent pl-4 hover:border-outline-variant hover:text-on-surface transition-all duration-200 font-label-caps text-label-caps flex items-center gap-3" href="{% url 'zumex:terms_of_service' %}">
+                    <span class="material-symbols-outlined text-lg">gavel</span> TERMS OF SERVICE
+                </a>
+            </nav>
+            <div class="mt-12 glass-card p-6 rounded-xl space-y-4">
+                <p class="font-headline-sm text-[18px] text-on-surface">Need Help?</p>
+                <div class="space-y-2">
+                    <a class="flex items-center gap-2 text-primary hover:underline text-sm font-body-md" href="mailto:zumexteam26@gmail.com">
+                        <span class="material-symbols-outlined text-sm">mail</span> zumexteam26@gmail.com
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="max-w-content-width space-y-section-gap">
+            <article class="space-y-8 ml-8 ">
+                <section class="scroll-mt-32 space-y-6" id="information-we-collect">
+                    <h2 class="font-headline-md text-headline-md text-primary my-8 ">Privacy Policy</h2>
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">1. Information We Collect</h3>
+                        <p class="text-on-surface-variant mb-4">At Zumex, we may collect information from users only when it is necessary to provide our services. These services include website development, poster design, and social media management.</p>
+                        <p class="text-on-surface-variant">Depending on the project, we may request information such as your name, contact details, brand name, logo, business information, social media details, content preferences, and other relevant materials. We collect this information only with your permission and only for the purpose of delivering the requested service.</p>
+                    </div>
+                </section>
+
+                <section class="scroll-mt-32 space-y-6" id="how-we-use">
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">2. How We Use Your Information</h3>
+                        <p class="text-on-surface-variant mb-4">The information you provide is used solely to complete the services you request from Zumex. For example:</p>
+                        <ul class="list-disc pl-6 space-y-2 text-on-surface-variant mb-4">
+                            <li><strong>For website development:</strong> we may use your brand name, logo, business details, and content.</li>
+                            <li><strong>For poster design:</strong> we may use your branding materials, design requirements, and promotional information.</li>
+                            <li><strong>For social media management:</strong> we may use information related to your business, audience, content strategy, and social media accounts.</li>
+                        </ul>
+                        <p class="text-on-surface-variant">Your information is used only to help us provide high-quality services and improve your experience with Zumex.</p>
+                    </div>
+
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">3. Sharing of Information</h3>
+                        <p class="text-on-surface-variant">Zumex respects your privacy. We do not sell, rent, trade, or share your personal or business information with third parties. Any information you provide remains confidential and is used only by Zumex for the purpose of delivering the requested service. We take privacy seriously and are committed to protecting the information entrusted to us.</p>
+                    </div>
+                </section>
+
+                <section class="scroll-mt-32 space-y-6" id="data-protection">
+                    <div class="glass-card inner-glow p-8 rounded-2xl">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">4. How We Protect Your Information</h3>
+                        <p class="text-on-surface-variant mb-4">At Zumex, we take reasonable measures to protect the information you share with us. All client information, project materials, and business details are handled with care and stored securely.</p>
+                        <p class="text-on-surface-variant mb-4">Access to your information is limited only to authorized members of the Zumex team who require it to provide the requested services. We do not disclose, misuse, or distribute your information without your permission unless required by law.</p>
+                        <p class="text-on-surface-variant">While we strive to maintain the highest level of security, no method of electronic storage or transmission over the internet can be guaranteed to be completely secure. However, we continuously work to safeguard your information and maintain its confidentiality.</p>
+                    </div>
+                </section>
+
+                <section class="scroll-mt-32 space-y-6" id="your-rights">
+                    <div class="glass-card inner-glow p-8 rounded-2xl border-l-4 border-l-primary">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">5. Your Rights Over Your Data</h3>
+                        <p class="text-on-surface-variant mb-4">As a user of Zumex, you have the right to know what information we collect and how it is used.</p>
+                        <ul class="list-disc pl-6 space-y-2 text-on-surface-variant mb-4">
+                            <li>You may request access to the information you have provided to us.</li>
+                            <li>You may ask for corrections to inaccurate information.</li>
+                            <li>You may request the removal of your information from our records, subject to any legal or contractual obligations.</li>
+                            <li>You may withdraw your consent for us to use your information at any time.</li>
+                        </ul>
+                        <p class="text-on-surface-variant">Upon receiving such a request, we will take reasonable steps to update, delete, or restrict the use of your information where applicable. If you have any questions regarding your data or privacy rights, you may contact Zumex directly for assistance.</p>
+                    </div>
+                </section>
+            </article>
+
+            <section class="glass-card p-12 rounded-3xl text-center relative overflow-hidden mt-12">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">contact_support</span>
+                </div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Still have questions?</h3>
+                <p class="text-on-surface-variant mb-8 max-w-lg mx-auto">Our team is here to help you navigate your privacy rights and our digital services.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <a class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95" href="{% url 'zumex:index' %}#contact">
+                        <span class="material-symbols-outlined">mail</span> Contact
+                    </a>
+                    <a class="border border-glass hover:bg-white/5 px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95" href="#" onclick="window.print(); return false;">
+                        <span class="material-symbols-outlined">print</span> Print Policy
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Intersection Observer for Active Nav
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('aside nav a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('text-primary', 'font-bold', 'border-primary');
+            link.classList.add('text-on-surface-variant', 'border-transparent');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('text-primary', 'font-bold', 'border-primary');
+                link.classList.remove('text-on-surface-variant', 'border-transparent');
+            }
+        });
+    });
+
+    // Micro-interaction for Glass Cards
+    document.querySelectorAll('.glass-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,455 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block title %}Zumex | The FreeLanucher Team {% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="icon" href="{% static 'images/ZUMEX_LOGO_VECTOR_SVG.svg' %}">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d0bcff",
+                        "surface": "#15121b",
+                        "surface-variant": "#37333d",
+                        "surface-container-lowest": "#0f0d15",
+                        "on-surface": "#e7e0ed",
+                        "on-surface-variant": "#cbc3d7",
+                        "background": "#000000",
+                        "on-primary": "#3c0091"
+                    },
+                    spacing: {
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "stack-md": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+                        "display-lg": ["Plus Jakarta Sans", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+                        "display-md": ["Plus Jakarta Sans", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"]
+                    },
+                    animation: {
+                        'spin-slow': 'spin 20s linear infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+    .no-drag {
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: auto;
+    }
+        /* GLOBAL UTILITIES */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* TESTIMONIALS */
+        .testimonial-tabs {
+            display: inline-flex;
+            gap: 6px;
+            padding: 6px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .testimonial-tabs button {
+            border: 0;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            padding: 12px 28px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: .3s;
+            font-weight: 600;
+        }
+        .testimonial-tabs button.active {
+            background: rgba(255,255,255,0.08);
+            color: #c59cff;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 0 20px rgba(139,92,246,0.2);
+        }
+        .testimonial-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .testimonial-card {
+            position: relative;
+            width: 100%;
+            max-width: 980px;
+            min-height: 420px;
+            border-radius: 32px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(24px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 40px;
+        }
+        .testimonial-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(139,92,246,0.12), transparent 65%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .testimonial-text {
+            position: relative;
+            z-index: 2;
+            max-width: 760px;
+            font-size: clamp(1rem, 4vw, 1.45rem);
+            line-height: 1.9;
+            color: rgba(255,255,255,0.82);
+            margin-bottom: 50px;
+        }
+        .testimonial-divider {
+            width: 180px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            margin-bottom: 35px;
+        }
+        .testimonial-user {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+        .testimonial-user h4 { color: white; margin: 0; font-size: 1.1rem; }
+        .testimonial-user span { color: rgba(255,255,255,0.55); }
+        .testimonial-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+            z-index: 10;
+        }
+        .testimonial-arrow:hover {
+            background: rgba(139,92,246,0.25);
+            transform: translateY(-50%) scale(1.08);
+        }
+        .testimonial-arrow.left { left: -25px; }
+        .testimonial-arrow.right { right: -25px; }
+        .testimonial-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 34px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            box-shadow: 0 0 40px rgba(139,92,246,0.35);
+            transition: .3s;
+        }
+        .testimonial-cta:hover { transform: translateY(-3px); }
+
+        @media (max-width:768px) {
+            .testimonial-card { padding: 50px 24px; }
+            .testimonial-arrow { display: none; }
+        }
+
+        /* FOOTER STYLES */
+        .footer-brand {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 4rem;
+            font-size: clamp(3rem, 18vw, 14rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.04);
+            user-select: none;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.02) 60%, rgba(0,0,0,0) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-brand::before {
+            content: "ZUMEX";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body class="bg-background select-none text-on-surface selection:bg-primary/30 font-body-md overflow-x-hidden w-full relative">
+
+    <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 bg-surface/80 backdrop-blur-md border-b border-white/10 shadow-sm">
+        <div class="flex gap-4 text-xl md:text-headline-md font-headline-md font-extrabold text-on-surface items-center">
+            <img src="{% static 'images/ZUMEX_LOGO_VECTOR_SVG.svg' %}" class="w-8 h-8 rounded-full" alt="Zumex Logo">
+            Zumex
+        </div>
+        
+        <div class="hidden md:flex items-center gap-stack-md">
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#services">Services</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#portfolio">Portfolio</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#process">Process</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#contact">Contact</a>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <button id="mobile-toggle" class="md:hidden flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-surface/95 backdrop-blur-xl z-50 hidden flex-col items-center justify-center gap-8 opacity-0 transition-opacity duration-300">
+        <button id="mobile-close" class="absolute top-6 right-6 p-2 text-on-surface-variant hover:text-primary">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+        <a class="text-3xl font-headline-md font-bold text-on-surface hover:text-primary transition-colors" href="#services">Services</a>
+                </div>
+        <a class="text-3xl font-headline-md font-bold text-on-surface hover:text-primary transition-colors" href="#portfolio">Portfolio</a>
+        <a class="text-3xl font-headline-md font-bold text-on-surface hover:text-primary transition-colors" href="#process">Process</a>
+        <a class="text-3xl font-headline-md font-bold text-on-surface hover:text-primary transition-colors" href="#contact">Contact</a>
+    </div>
+
+    <main>
+        {% if messages %}
+<div class="fixed top-24 right-4 z-50 space-y-3 w-[90vw] sm:w-auto max-w-md">
+
+    {% for message in messages %}
+    <div
+        class="message-toast flex items-start gap-3 px-5 py-4 rounded-xl shadow-2xl backdrop-blur-xl border animate-slideIn
+
+        {% if message.tags == 'success' %}
+            bg-emerald-500/10 border-emerald-500/30 text-emerald-400
+        {% elif message.tags == 'error' %}
+            bg-red-500/10 border-red-500/30 text-red-400
+        {% elif message.tags == 'warning' %}
+            bg-amber-500/10 border-amber-500/30 text-amber-400
+                </div>
+        {% elif message.tags == 'info' %}
+            bg-sky-500/10 border-sky-500/30 text-sky-400
+        {% elif message.tags == 'debug' %}
+            bg-purple-500/10 border-purple-500/30 text-purple-400
+        {% else %}
+            bg-white/10 border-white/20 text-white
+        {% endif %}
+        "
+        role="alert">
+
+        <!-- Icon -->
+        <div class="shrink-0 mt-0.5">
+
+            {% if message.tags == 'success' %}
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7"/>
+            </svg>
+
+            {% elif message.tags == 'error' %}
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+
+            {% elif message.tags == 'warning' %}
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path d="M12 9v4m0 4h.01"/>
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            </svg>
+
+            {% elif message.tags == 'info' %}
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path d="M12 16v-4"/>
+                <path d="M12 8h.01"/>
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
+
+            {% else %}
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
+            {% endif %}
+
+        </div>
+
+        <!-- Message -->
+        <div class="flex-1">
+            <p class="font-medium text-sm leading-relaxed">
+                {{ message }}
+            </p>
+        </div>
+
+        <!-- Close Button -->
+        <button
+            onclick="this.parentElement.remove()"
+            class="shrink-0 opacity-60 hover:opacity-100 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24" stroke-width="2">
+                <path d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-surface-container-lowest border-t border-white/10 relative overflow-hidden mt-10 md:mt-0">
+        <div class="absolute z-0 footer-brand pointer-events-none">ZUMEX</div>
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-stack-lg flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-gutter relative z-10">
+            <div class="max-w-xs text-center lg:text-left mx-auto lg:mx-0">
+                <div class="text-2xl font-headline-md font-extrabold text-on-surface mb-stack-sm flex items-center justify-center lg:justify-start gap-3">
+                    Zumex
+                </div>
+                <p class="text-on-surface-variant text-sm md:text-body-md mb-stack-md">Crafting high-performance digital experiences for the next generation of businesses.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 w-full lg:w-auto text-center sm:text-left">
+                <div class="flex flex-col gap-4 col-span-2 md:col-span-1 mt-4 md:mt-0">
+                    <h5 class="font-label-md text-on-surface uppercase tracking-wider text-xs md:text-sm">Legal</h5>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors text-sm md:text-base" href="{% url 'zumex:privacy_policy' %}">Privacy Policy</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors text-sm md:text-base" href="{% url 'zumex:terms_of_service' %}">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-6 md:py-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-on-surface-variant text-sm md:text-body-md relative z-10 text-center sm:text-left">
+            <p>© 2026 Zumex | The FreeLanucher Team. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="{% url 'zumex:index' %}" class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">public</span></a>
+                <a href="" onclick="sharePage(); return false;"  class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">share</span></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+function sharePage() {
+    if (navigator.share) {
+        navigator.share({
+            title: document.title,
+            text: 'Check out this page',
+            url: window.location.href
+        });
+    } else {
+        alert('Sharing not supported on this browser.');
+    }
+}
+</script>
+
+    <script>
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileClose = document.getElementById('mobile-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                void mobileMenu.offsetWidth;
+                mobileMenu.classList.remove('opacity-0');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden'; 
+            } else {
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                    document.body.style.overflow = '';
+                }, 300); 
+            }
+        }
+
+        mobileToggle.addEventListener('click', toggleMobileMenu);
+        mobileClose.addEventListener('click', toggleMobileMenu);
+        
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

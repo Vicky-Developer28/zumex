@@ -1,0 +1,789 @@
+{% extends 'zumex/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    /* BASE & UTILITIES */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    .glass {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-gradient {
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    }
+
+    /* HERO SECTION */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at 50% 15%, rgba(124, 92, 255, 0.08), transparent 40%), linear-gradient(180deg, #070812 0%, #03040b 45%, #000000 100%);
+    }
+    .hero::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -10%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 1400px;
+        height: 800px;
+        background: radial-gradient(circle, rgba(180, 130, 255, 0.25) 0%, rgba(130, 80, 255, 0.15) 35%, transparent 70%);
+        filter: blur(140px);
+        pointer-events: none;
+    }
+    .glow-arc {
+        position: absolute;
+        left: 50%;
+        bottom: -20%;
+        transform: translateX(-50%);
+        width: 200%;
+        max-width: 1900px;
+        aspect-ratio: 2/1;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .glow-arc::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(ellipse at center, transparent 46%, rgba(255,255,255,0.08) 49%, rgba(243,232,255,0.25) 51%, rgba(224,193,255,0.45) 53%, rgba(195,138,255,0.90) 55%, rgba(170,112,255,1) 57%, rgba(137,86,255,0.85) 60%, rgba(95,55,220,0.40) 66%, transparent 76%);
+        filter: blur(70px);
+    }
+    .glow-arc::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(ellipse at center, transparent 53%, rgba(255,255,255,0.35) 54.5%, rgba(255,255,255,0.15) 56%, transparent 60%);
+        filter: blur(14px);
+    }
+    .hero-content {
+        position: relative;
+        z-index: 5;
+        max-width: 950px;
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
+        padding: 80px 20px 0;
+    }
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(12px);
+        color: #c9b0ff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+    .hero-content h1 {
+        margin-top: 24px;
+        font-size: clamp(2.5rem, 8vw, 6rem);
+        line-height: 1.1;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: white;
+    }
+    .hero-content h1 span {
+        background: linear-gradient(180deg, #ffffff 0%, #e6d6ff 45%, #b694ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hero-content p {
+        max-width: 700px;
+        margin: 24px auto 0;
+        color: rgba(255,255,255,0.75);
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        line-height: 1.6;
+    }
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 40px;
+    }
+    .primary-btn, .secondary-btn {
+        padding: 14px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all .3s ease;
+        font-weight: 600;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .primary-btn {
+        color: white;
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        box-shadow: 0 0 30px rgba(139,92,246,.35);
+    }
+    .primary-btn:hover { transform: translateY(-3px); box-shadow: 0 0 40px rgba(139,92,246,.5); }
+    .secondary-btn {
+        color: white;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(12px);
+    }
+    .secondary-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+
+    /* ABOUT SECTION */
+    .about-zumex {
+        position: relative;
+        padding: 100px 5%;
+        background: radial-gradient(circle at center, rgba(139,92,246,.08), transparent 50%), #02030a;
+        overflow: hidden;
+    }
+    .about-container {
+        max-width: 1280px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+    .about-tag { color: #8b5cf6; font-size: .8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .about-content h2 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.1; margin: 16px 0; color: white; font-weight: 800; }
+    .about-content h2 span { color: #9f7cff; }
+    .about-content p { color: rgba(255,255,255,.7); font-size: 1rem; line-height: 1.8; margin-bottom: 30px; }
+
+    /* Responsive Orbit Showcase */
+    .orbit-showcase {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        aspect-ratio: 1/1;
+        margin: auto;
+    }
+    .orbit {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.06);
+    }
+    .orbit-1 { width: 60%; height: 60%; }
+    .orbit-2 { width: 90%; height: 90%; }
+    
+    .core-logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 22%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #000D1C, #0C003D);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 1px;
+        font-size: clamp(0.7rem, 2vw, 1.2rem);
+        box-shadow: 0 0 50px rgba(139,92,246,.5);
+        z-index: 10;
+    }
+    
+    .service, .user {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .service {
+        width: 12%;
+        aspect-ratio: 1/1;
+        border-radius: 12px;
+        background: rgba(255,255,255,.08);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,.1);
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+        z-index: 5;
+    }
+    .user {
+        aspect-ratio: 1/1;
+        border-radius: 100%;
+        background: linear-gradient(135deg, #8b5cf6, #ffffff);
+        border: 2px solid #02030a;
+        z-index: 5;
+    }
+
+    .web    { top: 20%; left: 50%; }
+    .design { top: 40%; left: 18%; }
+    .social { top: 40%; left: 82%; }
+    .ai     { top: 80%; left: 50%; }
+    .ui     { top: 25%; left: 75%; }
+    .brand  { top: 75%; left: 25%; }
+
+    .user-1 { top: 5%;  left: 50%; }
+    .user-2 { top: 15%; left: 85%; }
+    .user-3 { top: 50%; left: 100%; }
+    .user-4 { top: 85%; left: 85%; }
+    .user-5 { top: 95%; left: 50%; }
+    .user-6 { top: 50%; left: 0%; }
+
+    /* TESTIMONIALS SECTION */
+    .testimonial-tabs {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 2rem;
+    }
+    .testimonial-tabs button {
+        padding: 8px 20px;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #a1a1aa;
+        font-weight: 500;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+    }
+    .testimonial-tabs button.active, .testimonial-tabs button:hover {
+        background: #8b5cf6;
+        border-color: #8b5cf6;
+        color: white;
+    }
+    .testimonial-wrapper {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    .testimonial-card {
+        flex: 1;
+        padding: 2.5rem;
+        border-radius: 24px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .testimonial-text {
+        line-height: 1.8;
+        color: rgba(255,255,255,0.85);
+        font-style: italic;
+        margin-bottom: 1.5rem;
+    }
+    .testimonial-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        margin: 1.5rem 0;
+    }
+    .testimonial-user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        text-align: left;
+    }
+    .testimonial-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 1.2rem;
+    }
+    .testimonial-arrow {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex-shrink: 0;
+    }
+    .testimonial-arrow:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+    .testimonial-cta {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 12px;
+        color:#FFFFFF;
+        font-weight: 600;
+        border: 1px solid rgba(192,132,252,0.3);
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+    .testimonial-cta:hover { 
+        background: rgba(192,132,252,0.1); 
+        color: #c084fc
+    }
+
+    /* MOBILE RESPONSIVENESS OVERRIDES */
+    @media (max-width: 768px) {
+        .hero-buttons { flex-direction: column; width: 100%; }
+        .primary-btn, .secondary-btn { width: 100%; }
+        .about-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+        .about-content p { margin-inline: auto; }
+        .testimonial-wrapper { flex-direction: column; }
+        .testimonial-arrow { display: none; /* Swipe optimized on mobile usually */ }
+        .testimonial-card { padding: 1.5rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <header class="hero relative">
+        <div class="absolute inset-0 flex justify-center items-center opacity-10 pointer-events-none z-0">
+            <img src="{% static 'images/Flower_Vector_SVG.svg' %}" alt="Pattern" class="w-[800px] h-[800px] object-cover animate-spin-slow" />
+        </div>
+
+        <div class="glow-arc"></div>
+        <div class="hero-content">
+            <div class="badge">DIGITAL EXCELLENCE</div>
+            <h1>Transforming Ideas Into <br class="hidden md:block"/><span>Digital Experiences</span></h1>
+            <p>Website Development, Graphic Design, Social Media Management, and AI Automation solutions for modern businesses.Our mission is to transform ideas into professional digital experiences that help brands stand out in a competitive market.
+</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="primary-btn">Get Started</a>
+                <a href="#portfolio" class="secondary-btn">View Work</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="about-zumex reveal">
+        <div class="about-container">
+            <div class="about-content">
+                <span class="about-tag">CREATIVE DIGITAL TEAM</span>
+                <h2>Building Powerful <br/><span>Digital Experiences</span></h2>
+                <p>Zumex is a freelance team that helps businesses grow through modern websites, strategic social media management & stunning graphic design. Everything your brand needs under one creative team.</p>
+                <div class="hero-buttons !justify-start md:!justify-start !mt-0">
+                    <a href="#contact" class="primary-btn">Start Your Project</a>
+                </div>
+            </div>
+            <div class="orbit-showcase">
+                <div class="orbit orbit-1"></div>
+                <div class="orbit orbit-2"></div>
+                <div class="core-logo"><img src="{% static 'images/ZUMEX_LOGO_VECTOR_SVG.svg' %}"
+                                            draggable="false" 
+                                            class="no-drag w-12 h-12" 
+                                            oncontextmenu="return false;"></div>
+                <div class="service web">🌐</div>
+                <div class="service design">🎨</div>
+                <div class="service social">📱</div>
+                <div class="service ai">🤖</div>
+                <div class="service ui">✨</div>
+                <div class="service brand">🚀</div>
+                
+                <div class="user user-1 p-1"><img src="{% static 'me.png' %}"
+                                                  class="w-8  h-8 rounded-full object-cover no-drag" 
+                                                  draggable="false"
+                                                  oncontextmenu="return false;"></div>
+                <div class="user user-2 p-1"><img src="{% static 'kp.jpeg' %}"
+                                                  class="w-8  h-8 rounded-full object-cover no-drag" 
+                                                  draggable="false"
+                                                  oncontextmenu="return false;"></div>
+                <div class="user user-4  p-1"><img src="{% static 'santhos.png' %}"
+                                                  class="w-8  h-8 rounded-full object-cover no-drag" 
+                                                  draggable="false"
+                                                  oncontextmenu="return false;"></div>
+                <div class="user user-5  p-1"><img src="https://plus.unsplash.com/premium_photo-1723478495487-c436ae82f48f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGluZGlhbiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D"
+                                                  class="w-8  h-8 rounded-full object-cover no-drag" 
+                                                  draggable="false"
+                                                  oncontextmenu="return false;"></div>
+                <div class="user user-6  p-1"><img src="{% static 'images/people-1.png' %}"
+                                                  class="w-8  h-8 rounded-full object-cover no-drag" 
+                                                  draggable="false"
+                                                  oncontextmenu="return false;"></div>
+            </div>
+        </div>
+    </section>
+    <div class="relative">
+        <div class="absolute left-0 bottom-[-250px] opacity-90 mix-blend-screen pointer-events-none z-0 hidden lg:block animate-pulse-slow">
+
+            <img src="{% static 'images/BALL_VECTOR_SVG.svg' %}" alt="Glow" class="w-[500px] h-[500px] object-cover" />
+        </div>
+    </div>
+
+    <section class="py-20 md:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto reveal" id="services">
+        <div class="text-center mb-16 md:mb-20">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">Our Expertise</h2>
+            <p class="text-gray-400 max-w-xl mx-auto">High-performance solutions tailored to elevate your business presence in the digital landscape.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass p-8 md:p-10 rounded-3xl group hover:-translate-y-2 transition-transform duration-300">
+                <span class="material-symbols-outlined text-purple-500 text-5xl mb-6 block">language</span>
+                <h3 class="text-2xl font-bold mb-4 text-white">Website Development</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Business & E-Commerce</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Portfolio Websites</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Custom Web Applications</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Responsive Performance</span></li>
+                </ul>
+            </div>
+            <div class="glass p-8 md:p-10 rounded-3xl group hover:-translate-y-2 transition-transform duration-300">
+                <span class="material-symbols-outlined text-purple-500 text-5xl mb-6 block">palette</span>
+                <h3 class="text-2xl font-bold mb-4 text-white">Graphic Design</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Brand Identity Systems</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Social Media Assets</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Marketing Materials</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Modern Posters & UI</span></li>
+                </ul>
+            </div>
+            <div class="glass p-8 md:p-10 rounded-3xl group hover:-translate-y-2 transition-transform duration-300 md:col-span-2 lg:col-span-1">
+                <span class="material-symbols-outlined text-purple-500 text-5xl mb-6 block">trending_up</span>
+                <h3 class="text-2xl font-bold mb-4 text-white">Social Media Management</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Content Strategy</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Organic Engagement</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Reels & Video Creation</span></li>
+                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-1 text-purple-400">check_circle</span> <span>Performance Analytics</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-16 md:py-24 bg-[#070812] border-y border-white/5 overflow-hidden reveal">
+
+        <div class="absolute inset-0 z-0 pointer-events-none"
+             style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 32px 32px; mask-image: radial-gradient(circle at center top, black 30%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center top, black 30%, transparent 80%);">
+        </div>
+
+        <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="relative z-10 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+
+                <div class="glass p-6 md:p-8 rounded-3xl text-center transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] group">
+                    <h2 class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-500 text-4xl md:text-5xl font-extrabold mb-2 leading-tight">24h</h2>
+                    <p class="text-gray-400 text-sm md:text-base font-medium tracking-wide">Fast Delivery</p>
+                </div>
+
+                <div class="glass p-6 md:p-8 rounded-3xl text-center transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] group">
+                    <h2 class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-500 text-4xl md:text-5xl font-extrabold mb-2 leading-tight">99%</h2>
+                    <p class="text-gray-400 text-sm md:text-base font-medium tracking-wide">Client Satisfaction</p>
+                </div>
+
+                <div class="glass p-6 md:p-8 rounded-3xl text-center transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] group">
+                    <h2 class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-500 text-4xl md:text-5xl font-extrabold mb-2 leading-tight">4+</h2>
+                    <p class="text-gray-400 text-sm md:text-base font-medium tracking-wide">Modern Tech Stack</p>
+                </div>
+
+                <div class="glass p-6 md:p-8 rounded-3xl text-center transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] group">
+                    <h2 class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-500 text-4xl md:text-5xl font-extrabold mb-2 leading-tight">24/7</h2>
+                    <p class="text-gray-400 text-sm md:text-base font-medium tracking-wide">Dedicated Support</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-20 md:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto reveal" id="process">
+        <div class="text-center mb-16 md:mb-24">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">The Workflow</h2>
+            <p class="text-gray-400 max-w-xl mx-auto">A transparent and iterative process ensuring your project exceeds expectations.</p>
+        </div>
+        <div class="relative flex flex-col md:flex-row justify-between items-center md:items-start gap-12 before:absolute before:top-8 before:left-0 before:w-full before:h-px before:bg-white/10 before:hidden md:before:block">
+            <div class="relative flex-1 text-center md:text-left w-full">
+                <div class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center text-white font-bold text-xl mb-6 mx-auto md:mx-0 relative z-10 shadow-[0_0_20px_rgba(139,92,246,0.5)]">1</div>
+                <h4 class="text-xl font-bold mb-2 text-white">Consultation</h4>
+                <p class="text-gray-400 text-sm md:text-base">Discovery call to align on goals and vision.</p>
+            </div>
+            <div class="relative flex-1 text-center md:text-left w-full">
+                <div class="w-16 h-16 rounded-full glass flex items-center justify-center text-white font-bold text-xl mb-6 mx-auto md:mx-0 relative z-10">2</div>
+                <h4 class="text-xl font-bold mb-2 text-white">Planning</h4>
+                <p class="text-gray-400 text-sm md:text-base">Wireframing and strategic roadmap creation.</p>
+            </div>
+            <div class="relative flex-1 text-center md:text-left w-full">
+                <div class="w-16 h-16 rounded-full glass flex items-center justify-center text-white font-bold text-xl mb-6 mx-auto md:mx-0 relative z-10">3</div>
+                <h4 class="text-xl font-bold mb-2 text-white">Development</h4>
+                <p class="text-gray-400 text-sm md:text-base">Execution phase with regular feedback loops.</p>
+            </div>
+            <div class="relative flex-1 text-center md:text-left w-full">
+                <div class="w-16 h-16 rounded-full glass flex items-center justify-center text-white font-bold text-xl mb-6 mx-auto md:mx-0 relative z-10">4</div>
+                <h4 class="text-xl font-bold mb-2 text-white">Launch</h4>
+                <p class="text-gray-400 text-sm md:text-base">Testing, optimization, and final deployment.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 md:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto reveal">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-8 text-white">Testimonials</h2>
+
+        <div class="testimonial-tabs">
+            <button class="tab-btn active" data-target="Web Development">Web Development</button>
+            <button class="tab-btn" data-target="Graphic Design">Graphic Design</button>
+            <button class="tab-btn" data-target="Social Media">Social Media</button>
+        </div>
+    </div>
+
+    <div class="testimonial-wrapper relative">
+        {% if testimonials %}
+            <button class="testimonial-arrow left z-10" onclick="changeTestimonial(-1)">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+
+            <div id="testimonials-container" class="relative w-full overflow-hidden">
+                {% for testimonial in testimonials %}
+                <div class="testimonial-card glass transition-opacity duration-300 hidden"
+                     data-category="{{ testimonial.category }}">
+                    <p class="testimonial-text">
+                        "{{ testimonial.content }}"
+                    </p>
+                    <div class="testimonial-divider"></div>
+                    <div class="testimonial-user">
+                        <div class="testimonial-avatar">{{ testimonial.name|make_list|first|upper }}</div>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">{{ testimonial.name }}</h4>
+                            <span class="text-sm text-gray-400">{{ testimonial.role }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="testimonial-arrow right z-10" onclick="changeTestimonial(1)">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        {% else %}
+            <p class="text-center text-gray-400 w-full">No testimonials available yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="text-center mt-12">
+        <a href="#contact" class="testimonial-cta">Become Our Next Success Story</a>
+    </div>
+  </div>
+    </section>
+
+<script>
+    let currentTestimonialIndex = 0;
+    const allSlides = Array.from(document.querySelectorAll('.testimonial-card'));
+    let activeSlides = [];
+    const tabBtns = document.querySelectorAll('.tab-btn');
+
+    // Function to filter slides by category
+    function filterTestimonials(category) {
+        // Update active class on buttons
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-target="${category}"]`).classList.add('active');
+
+        // Hide all slides and populate the activeSlides array
+        activeSlides = [];
+        allSlides.forEach(slide => {
+            slide.classList.add('hidden');
+            if (slide.dataset.category === category) {
+                activeSlides.push(slide);
+            }
+        });
+
+        // Reset index and show the first slide of the new category (if any exist)
+        currentTestimonialIndex = 0;
+        if (activeSlides.length > 0) {
+            activeSlides[0].classList.remove('hidden');
+        } else {
+            // Optional: You could show a "No reviews for this category" message here
+            console.log("No testimonials in this category.");
+        }
+    }
+
+    // Attach click listeners to tabs
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => filterTestimonials(btn.dataset.target));
+    });
+
+    // Arrow navigation logic (cycles only through activeSlides)
+    function changeTestimonial(direction) {
+        if (activeSlides.length <= 1) return; // No need to slide if 0 or 1 item
+
+        activeSlides[currentTestimonialIndex].classList.add('hidden');
+        currentTestimonialIndex += direction;
+
+        if (currentTestimonialIndex >= activeSlides.length) {
+            currentTestimonialIndex = 0;
+        } else if (currentTestimonialIndex < 0) {
+            currentTestimonialIndex = activeSlides.length - 1;
+        }
+
+        activeSlides[currentTestimonialIndex].classList.remove('hidden');
+    }
+
+    // Initialize the first tab on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        if (tabBtns.length > 0) {
+            filterTestimonials('Web Development');
+        }
+    });
+</script>
+
+        <div class="absolute left-0 bottom-0 opacity-40 mix-blend-screen pointer-events-none z-0 hidden lg:block animate-pulse-slow">
+            <img src="{% static 'images/BALL_VECTOR_SVG.svg' %}" alt="Glow" class="w-[500px] h-[500px] object-cover" />
+        </div>
+
+
+    <section class="py-20 md:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto reveal" id="portfolio">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 md:mb-16 gap-6 text-center md:text-left">
+            <div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">Featured Work</h2>
+                <p class="text-gray-400">A showcase of our latest digital transformations.</p>
+            </div>
+            <div class="hidden md:flex gap-4">
+                <button class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors text-white"><span class="material-symbols-outlined">chevron_left</span></button>
+                <button class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors text-white"><span class="material-symbols-outlined">chevron_right</span></button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {% for project in recent_projects %}
+                <div class="glass rounded-3xl overflow-hidden group {% if forloop.counter == 3 %}sm:col-span-2 lg:col-span-1{% endif %}">
+                    <div class="h-56 md:h-64 overflow-hidden bg-black/50">
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                             src="{% if project.image %}{{ project.image.url }}{% else %}{{ project.image_url }}{% endif %}" 
+                             alt="{{ project.title }}"/>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <span class="text-purple-400 text-xs font-bold tracking-wider uppercase mb-2 block">{{ project.category }}</span>
+                        <h3 class="text-xl md:text-2xl font-bold text-white">{{ project.title }}</h3>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="glass rounded-3xl p-12 col-span-1 sm:col-span-2 lg:col-span-3 text-center text-gray-400">
+                    <span class="material-symbols-outlined text-4xl mb-3 block">work_history</span>
+                    <p>No projects uploaded yet. Check back soon!</p>
+                </div>
+            {% endfor %}
+
+        </div>
+    </section>
+
+    <section class="py-20 md:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto reveal relative" id="contact">
+        <div class="absolute right-0 bottom-0 opacity-40 mix-blend-screen pointer-events-none z-0 hidden lg:block animate-pulse-slow">
+            <img src="{% static 'images/BALL_VECTOR_SVG.svg' %}" alt="Glow" class="w-[500px] h-[500px] object-cover" />
+        </div>
+
+        <div class="glass rounded-[32px] md:rounded-[40px] p-8 sm:p-12 md:p-16 lg:p-20 relative overflow-hidden z-10 shadow-2xl">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-white leading-tight">Let's Build Something Amazing Together</h2>
+                    <p class="text-gray-300 text-base md:text-lg mb-10">Ready to take your digital presence to the next level? Drop us a message and let's discuss your project.</p>
+                    <div class="space-y-6">
+                        <a class="flex select-text  items-center gap-4 text-sm md:text-base text-gray-300 hover:text-purple-400 transition-colors break-all" href="mailto:zumexteam26@gmail.com">
+                            <span class="material-symbols-outlined glass p-3 rounded-full shrink-0 flex items-center justify-center">mail</span>
+                            <span class="font-medium">zumexteam26@gmail.com</span>
+                        </a>
+
+<a class="flex select-text items-center gap-4 text-sm md:text-base text-gray-300 hover:text-purple-400 transition-colors break-all" >
+                            <span class="material-symbols-outlined glass p-3 rounded-full shrink-0 flex items-center justify-center">call</span>
+                            <span class="font-medium">+91 63790 77144 & +91 76678 43122</span>
+                        </a>
+
+
+
+
+                        <div class="flex flex-col sm:flex-row gap-4 w-full pt-4">
+                            <a href="https://wa.link/lvpc3h" class="glass p-4 rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3 group w-full sm:w-auto font-medium text-white">
+                                <span class="w-8 h-8"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
+<path fill="#fff" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"></path><path fill="#fff" d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"></path><path fill="#cfd8dc" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"></path><path fill="#40c351" d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"></path><path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" clip-rule="evenodd"></path>
+</svg></span> WhatsApp
+                            </a>
+                            <a href="https://www.instagram.com/zumexteam/?utm_source=ig_web_button_share_sheet" class="glass p-4 rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3 group w-full sm:w-auto font-medium text-white">
+                                <span class="w-8 h-8"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+<rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint0_radial_87_7153)"/>
+<rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint1_radial_87_7153)"/>
+<rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint2_radial_87_7153)"/>
+<path d="M23 10.5C23 11.3284 22.3284 12 21.5 12C20.6716 12 20 11.3284 20 10.5C20 9.67157 20.6716 9 21.5 9C22.3284 9 23 9.67157 23 10.5Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 21C18.7614 21 21 18.7614 21 16C21 13.2386 18.7614 11 16 11C13.2386 11 11 13.2386 11 16C11 18.7614 13.2386 21 16 21ZM16 19C17.6569 19 19 17.6569 19 16C19 14.3431 17.6569 13 16 13C14.3431 13 13 14.3431 13 16C13 17.6569 14.3431 19 16 19Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6 15.6C6 12.2397 6 10.5595 6.65396 9.27606C7.2292 8.14708 8.14708 7.2292 9.27606 6.65396C10.5595 6 12.2397 6 15.6 6H16.4C19.7603 6 21.4405 6 22.7239 6.65396C23.8529 7.2292 24.7708 8.14708 25.346 9.27606C26 10.5595 26 12.2397 26 15.6V16.4C26 19.7603 26 21.4405 25.346 22.7239C24.7708 23.8529 23.8529 24.7708 22.7239 25.346C21.4405 26 19.7603 26 16.4 26H15.6C12.2397 26 10.5595 26 9.27606 25.346C8.14708 24.7708 7.2292 23.8529 6.65396 22.7239C6 21.4405 6 19.7603 6 16.4V15.6ZM15.6 8H16.4C18.1132 8 19.2777 8.00156 20.1779 8.0751C21.0548 8.14674 21.5032 8.27659 21.816 8.43597C22.5686 8.81947 23.1805 9.43139 23.564 10.184C23.7234 10.4968 23.8533 10.9452 23.9249 11.8221C23.9984 12.7223 24 13.8868 24 15.6V16.4C24 18.1132 23.9984 19.2777 23.9249 20.1779C23.8533 21.0548 23.7234 21.5032 23.564 21.816C23.1805 22.5686 22.5686 23.1805 21.816 23.564C21.5032 23.7234 21.0548 23.8533 20.1779 23.9249C19.2777 23.9984 18.1132 24 16.4 24H15.6C13.8868 24 12.7223 23.9984 11.8221 23.9249C10.9452 23.8533 10.4968 23.7234 10.184 23.564C9.43139 23.1805 8.81947 22.5686 8.43597 21.816C8.27659 21.5032 8.14674 21.0548 8.0751 20.1779C8.00156 19.2777 8 18.1132 8 16.4V15.6C8 13.8868 8.00156 12.7223 8.0751 11.8221C8.14674 10.9452 8.27659 10.4968 8.43597 10.184C8.81947 9.43139 9.43139 8.81947 10.184 8.43597C10.4968 8.27659 10.9452 8.14674 11.8221 8.0751C12.7223 8.00156 13.8868 8 15.6 8Z" fill="white"/>
+<defs>
+<radialGradient id="paint0_radial_87_7153" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(12 23) rotate(-55.3758) scale(25.5196)">
+<stop stop-color="#B13589"/>
+<stop offset="0.79309" stop-color="#C62F94"/>
+<stop offset="1" stop-color="#8A3AC8"/>
+</radialGradient>
+<radialGradient id="paint1_radial_87_7153" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11 31) rotate(-65.1363) scale(22.5942)">
+<stop stop-color="#E0E8B7"/>
+<stop offset="0.444662" stop-color="#FB8A2E"/>
+<stop offset="0.71474" stop-color="#E2425C"/>
+<stop offset="1" stop-color="#E2425C" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint2_radial_87_7153" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0.500002 3) rotate(-8.1301) scale(38.8909 8.31836)">
+<stop offset="0.156701" stop-color="#406ADC"/>
+<stop offset="0.467799" stop-color="#6A45BE"/>
+<stop offset="1" stop-color="#6A45BE" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg></span> Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form class="space-y-6 flex flex-col justify-center" method="POST" action="{% url 'zumex:index' %}">
+    {% csrf_token %}
+    <div class="grid sm:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-sm font-semibold mb-2 text-white/80">Name <span class="text-red-500">*</span></label>
+            <input name="full_name" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Enter Your Name" type="text" required/>
+        </div>
+        <div>
+            <label class="block text-sm font-semibold mb-2 text-white/80">Email</label>
+            <!-- Removed 'required' attribute here -->
+            <input name="email_address" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Enter Your Mail (Optional)" type="email"/>
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-sm font-semibold mb-2 text-white/80">Phone Number <span class="text-red-500">*</span></label>
+        <input name="phone_number" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="+91 00000 000XX" type="tel" required/>
+    </div>
+
+    <div>
+        <label class="block text-sm font-semibold mb-2 text-white/80">Subject <span class="text-red-500">*</span></label>
+        <input name="subject" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Inquiry Subject" type="text" required/>
+    </div>
+
+    <div>
+        <label class="block text-sm font-semibold mb-2 text-white/80">Message <span class="text-red-500">*</span></label>
+        <textarea name="message" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base resize-none text-white placeholder-white/30" placeholder="Tell us about your project..." rows="4" required></textarea>
+    </div>
+
+    <div class="flex items-start mt-2">
+        <div class="flex items-center h-5">
+            <input id="ppts" name="ppts" type="checkbox" value="true" class="w-4 h-4 bg-black/40 border border-white/10 rounded accent-purple-500 focus:ring-purple-500 outline-none cursor-pointer" required />
+        </div>
+        <div class="ml-3 text-sm">
+            <label for="ppts" class="font-medium text-white/80 cursor-pointer">
+                I have read the <a href="{% url 'zumex:privacy_policy' %}" class="text-purple-400 hover:underline">privacy policy</a> & <a href="{% url 'zumex:terms_of_service' %}" class="text-purple-400 hover:underline">terms of service</a> <span class="text-red-500">*</span>
+            </label>
+        </div>
+    </div>
+
+    <button class="btn-gradient w-full py-4 rounded-xl font-bold text-white shadow-lg hover:shadow-purple-500/30 hover:-translate-y-1 transition-all text-lg mt-4" type="submit">
+        Send Message
+    </button>
+</form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
