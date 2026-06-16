@@ -77,6 +77,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.Security.SecurityMiddleware',
+    'Whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -153,6 +155,9 @@ STATICFILES_DIRS = [
 
 # 3. Where Django WILL DUMP all static files when preparing for production
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+STATICFILES_STORAGE = "hitenoise.strorage.CompressedMainfestStaticFilesStorage"
 
 # Base url to serve media files
 MEDIA_URL = 'media/'
