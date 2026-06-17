@@ -14,16 +14,17 @@ load_dotenv(BASE_DIR / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 # Raises an error if SECRET_KEY is not found in the environment
 SECRET_KEY = os.environ['SECRET_KEY']
+API_BASE =  os.environ['API_BASE']
+API_SHARED_SECRET = os.environ.get('API_SHARED_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Evaluates to True if the string is 'True', '1', or 't'
-DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
+DEBUG = os.getenv('DEBUG', 'False')
 
 # Parses the comma-separated string from .env into a Python list
 allowed_hosts_env = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost')
 ALLOWED_HOSTS = allowed_hosts_env.split(',')
-API_BASE =  os.environ['API_BASE']
-API_SHARED_SECRET = os.environ.get('API_SHARED_SECRET')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'zumex',
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://zumex.is-a.dev",
+    "https://*.onrender.com",
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE =True
 
 UNFOLD = {
     "SITE_TITLE": "Portfolio Admin",
@@ -72,13 +80,13 @@ UNFOLD = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -131,6 +139,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -157,8 +179,11 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
-STATICFILES_STORAGE = "whitenoise.stroage.CompressedMainfestStaticFilesStorage"
-
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 # Base url to serve media files
 MEDIA_URL = 'media/'
 
