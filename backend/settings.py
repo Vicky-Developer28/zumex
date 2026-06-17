@@ -23,7 +23,7 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 allowed_hosts_env = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost')
 ALLOWED_HOSTS = allowed_hosts_env.split(',')
 API_BASE =  os.environ['API_BASE']
-
+API_SHARED_SECRET = os.environ.get('API_SHARED_SECRET')
 # Application definition
 
 INSTALLED_APPS = [
@@ -71,6 +71,7 @@ UNFOLD = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,7 +79,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -157,7 +157,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
-STATICFILES_STORAGE = "whitenoise.strorage.CompressedMainfestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.stroage.CompressedMainfestStaticFilesStorage"
 
 # Base url to serve media files
 MEDIA_URL = 'media/'
