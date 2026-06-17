@@ -3,35 +3,18 @@ import requests
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
 
 # Set up logging for the frontend
 logger = logging.getLogger(__name__)
-def token_required(view_func):
-    """
-    Ensures that internal API requests contain the shared secret key in the headers.
-    Bypasses standard Django session authentication (preventing 302 redirects).
-    """
-    def wrap(request, *args, **kwargs):
-        auth_header = request.headers.get('Authorization')
-        expected_token = f"Bearer {settings.API_SHARED_SECRET}"
-        
-        if auth_header == expected_token:
-            return view_func(request, *args, **kwargs)
-            
-        logger.warning(f"Unauthorized API access attempt. Header provided: {auth_header}")
-        return JsonResponse({'error': 'Unauthorized'}, status=401)
-    return wrap
     
-@csrf_exempt
-@token_required
+# NO DECORATORS HERE! This is a public webpage.
 def index(request):
     """
     Main landing page view. 
     Handles fetching data from the internal API and submitting inquiry forms.
     """
     # 1. Prepare the authorization header using the secret from .env
-    # This proves to the backend API that this request is legitimate
+    # We attach this to the `requests` call so the BACKEND knows we are legit.
     headers = {
         "Authorization": f"Bearer {settings.API_SHARED_SECRET}",
         "Referer": settings.API_BASE,
@@ -62,13 +45,12 @@ def index(request):
                 messages.success(request, "Your message has been received. We'll be in touch soon!")
             else:
                 logger.error(f"API returned status {res.status_code} on POST: {res.text}")
-                messages.error(request, f"API returned status {res.status_code} on POST: {res.text} -- There was an issue submitting your form. Please try again.")
+                messages.error(request, f"There was an issue submitting your form. Please try again. API returned status {res.status_code} on POST: {res.text}")
                 
         except requests.exceptions.RequestException as e:
-            logger.error(f"Frontend failed to reach API for POST: {e}")
+            logger.error(f"Frontend failed to reach API for POST: {e} ")
             messages.error(request, "Service unavailable. Please try again later.")
             
-        # Redirect back to the index page to prevent form re-submission on refresh
         return redirect('zumex:index')
 
     # -------------------------------------------------------------------------
@@ -93,13 +75,8 @@ def index(request):
             
     except requests.exceptions.RequestException as e:
         logger.error(f"Frontend failed to reach API for GET: {e}")
-        # We pass here gracefully so the page still loads (just without projects/testimonials) 
-        # rather than crashing the whole site.
         pass 
 
-    # -------------------------------------------------------------------------
-    # RENDER: Pass data to the template
-    # -------------------------------------------------------------------------
     context = {
         'recent_projects': recent_projects,
         'testimonials': testimonials,
