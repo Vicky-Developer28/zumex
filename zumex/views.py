@@ -27,7 +27,8 @@ def index(request):
             'email_address': request.POST.get('email'),
             'phone_number': request.POST.get('phone'),
             'subject': request.POST.get('subject'),
-            'message': request.POST.get('message')
+            'message': request.POST.get('message'),
+            'ppts':request.POST.get('ppts'),
         }
         
         try:
