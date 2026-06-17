@@ -3,10 +3,28 @@ import requests
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 
 # Set up logging for the frontend
 logger = logging.getLogger(__name__)
-
+def token_required(view_func):
+    """
+    Ensures that internal API requests contain the shared secret key in the headers.
+    Bypasses standard Django session authentication (preventing 302 redirects).
+    """
+    def wrap(request, *args, **kwargs):
+        auth_header = request.headers.get('Authorization')
+        expected_token = f"Bearer {settings.API_SHARED_SECRET}"
+        
+        if auth_header == expected_token:
+            return view_func(request, *args, **kwargs)
+            
+        logger.warning(f"Unauthorized API access attempt. Header provided: {auth_header}")
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+    return wrap
+    
+@csrf_exempt
+@token_required
 def index(request):
     """
     Main landing page view. 
