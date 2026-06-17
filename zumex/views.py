@@ -12,7 +12,7 @@ def index(request):
             'full_name': request.POST.get('name'),
             'email_address': request.POST.get('email'),
             'phone_number': request.POST.get('phone'),  # <-- Added this line
-            'subject': 'Website Contact Form',
+            'subject': request.POST.get('subject'),
             'message': request.POST.get('message')
         }
         try:
