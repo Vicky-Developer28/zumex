@@ -37,7 +37,7 @@ def index(request: HttpRequest) -> HttpResponse:
         try:
             # REPLACE <YOUR_API_PREFIX> with the actual prefix from your main urls.py
             # Example: f"{settings.API_BASE}/v1/inquiries/"
-            api_post_url = f"{settings.API_BASE}/api/inquiries/"
+            api_post_url = f"{settings.API_BASE}/inquiries/"
             
             res = requests.post(
                 api_post_url, 
@@ -75,7 +75,7 @@ def index(request: HttpRequest) -> HttpResponse:
     try:
         # REPLACE <YOUR_API_PREFIX> with the actual prefix from your main urls.py
         # Example: f"{settings.API_BASE}/v1/zumex-home/"
-        api_get_url = f"{settings.API_BASE}/api/zumex-home/"
+        api_get_url = f"{settings.API_BASE}/zumex-home/"
         
         response = requests.get(
             api_get_url, 
