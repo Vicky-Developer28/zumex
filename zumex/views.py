@@ -15,7 +15,8 @@ def index(request):
     # 1. Prepare the authorization header using the secret from .env
     # This proves to the backend API that this request is legitimate
     headers = {
-        "Authorization": f"Bearer {settings.API_SHARED_SECRET}"
+        "Authorization": f"Bearer {settings.API_SHARED_SECRET}",
+        "Referer": settings.API_BASE,
     }
 
     # -------------------------------------------------------------------------
