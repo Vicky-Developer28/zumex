@@ -19,7 +19,6 @@ def index(request: HttpRequest) -> HttpResponse:
     # We attach this to the `requests` call so the BACKEND knows we are legit.
     headers = {
         "Authorization": f"Bearer {getattr(settings, 'API_SHARED_SECRET', '')}",
-        "Referer": getattr(settings, 'API_BASE', ''),
     }
 
     # -------------------------------------------------------------------------
@@ -37,7 +36,7 @@ def index(request: HttpRequest) -> HttpResponse:
         
         try:
             res = requests.post(
-                f"{settings.API_BASE}/inquiries/", 
+                f"{settings.API_BASE}/api/inquiries/", 
                 json=data, 
                 headers=headers, 
                 timeout=5
@@ -73,7 +72,7 @@ def index(request: HttpRequest) -> HttpResponse:
     
     try:
         response = requests.get(
-            f"{settings.API_BASE}//zumex-home/", 
+            f"{settings.API_BASE}/api/zumex-home/", 
             headers=headers, 
             timeout=5
         )
