@@ -73,7 +73,7 @@ def index(request: HttpRequest) -> HttpResponse:
     
     try:
         response = requests.get(
-            f"{settings.API_BASE}/zumex/home-data/", 
+            f"{settings.API_BASE}//zumex-home/", 
             headers=headers, 
             timeout=5
         )
