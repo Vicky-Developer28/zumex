@@ -19,6 +19,7 @@ def index(request: HttpRequest) -> HttpResponse:
     # We attach this to the `requests` call so the BACKEND knows we are legit.
     headers = {
         "Authorization": f"Bearer {getattr(settings, 'API_SHARED_SECRET', '')}",
+          "Referer": getattr(settings, 'API_BASE',''),
     }
 
     # -------------------------------------------------------------------------
@@ -78,11 +79,16 @@ def index(request: HttpRequest) -> HttpResponse:
         )
         
         if response.status_code == 200:
-            data = response.json()
-            recent_projects = data.get('projects', [])
-            testimonials = data.get('testimonials', [])
+            try:
+                # If this is HTML, it will fail gracefully here
+                data = response.json()
+                recent_projects = data.get('projects', [])
+                testimonials = data.get('testimonials', [])
+            except ValueError:
+                # Log the mistake but let the page load anyway
+                logger.error(f"Expected JSON but got HTML. The API URL is incorrect. Snippet: {response.text[:200]}")
         else:
-            logger.warning(f"API returned status {response.status_code} on GET home-data. Response: {response.text}")
+            logger.warning(f"API returned status {response.status_code} on GET home-data.")
             
     except RequestException as e:
         logger.exception(f"Frontend failed to reach API for GET home-data : {e}")
