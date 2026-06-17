@@ -31,7 +31,7 @@ def index(request: HttpRequest) -> HttpResponse:
             'phone_number': request.POST.get('phone', ''),
             'subject': request.POST.get('subject'),
             'message': request.POST.get('message'),
-            'ppts': request.POST.get('ppts'),
+            'ppts': request.POST.get('ppts') == 'true',
         }
         
         try:
