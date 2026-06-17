@@ -44,7 +44,7 @@ def index(request):
                 messages.success(request, "Your message has been received. We'll be in touch soon!")
             else:
                 logger.error(f"API returned status {res.status_code} on POST: {res.text}")
-                messages.error(request, "There was an issue submitting your form. Please try again.")
+                messages.error(request, f"API returned status {res.status_code} on POST: {res.text} -- There was an issue submitting your form. Please try again.")
                 
         except requests.exceptions.RequestException as e:
             logger.error(f"Frontend failed to reach API for POST: {e}")
