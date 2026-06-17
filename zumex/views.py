@@ -11,15 +11,17 @@ from django.http import HttpRequest, HttpResponse
 logger = logging.getLogger(__name__)
 
 def index(request: HttpRequest) -> HttpResponse:
+
     """
     Main landing page view. 
     Handles fetching data from the internal API and submitting inquiry forms.
     """
     # 1. Prepare the authorization header using the secret from .env
     # We attach this to the `requests` call so the BACKEND knows we are legit.
+
     headers = {
         "Authorization": f"Bearer {getattr(settings, 'API_SHARED_SECRET', '')}",
-          "Referer": getattr(settings, 'API_BASE',''),
+        "Referer": getattr(settings, 'API_BASE',''),
     }
 
     # -------------------------------------------------------------------------
@@ -34,34 +36,33 @@ def index(request: HttpRequest) -> HttpResponse:
             'message': request.POST.get('message'),
             'ppts': request.POST.get('ppts'),
         }
-        
+
         try:
             res = requests.post(
                 f"{settings.API_BASE}/api/inquiries/", 
                 json=data, 
                 headers=headers, 
                 timeout=5
+
             )
-            
+
             if res.status_code == 201:
                 messages.success(request, "Your message has been received. We'll be in touch soon!")
             else:
                 # Log the actual raw error for developers
                 logger.error(f"API POST Error ({res.status_code}): {res.text}")
-                
                 # Attempt to extract a clean JSON error for the user, otherwise use a generic fallback
                 try:
                     error_msg = res.json().get('error', 'An unexpected error occurred.')
                 except ValueError:
-                    error_msg = "We couldn't process your request right now."
-                    
+                    error_msg = "We couldn't process your request right now."                
                 messages.error(request, f"There was an issue submitting your form: {error_msg}")
-                
+        
         except RequestException:
             # logger.exception automatically includes the full traceback in the logs
             logger.exception("Frontend failed to reach API for POST.")
             messages.error(request, "Service unavailable. Please try again later.")
-            
+
         # Always redirect after a successful POST (Post/Redirect/Get pattern)
         return redirect('zumex:index')
 
@@ -70,25 +71,21 @@ def index(request: HttpRequest) -> HttpResponse:
     # -------------------------------------------------------------------------
     recent_projects = []
     testimonials = []
-    
+
     try:
         response = requests.get(
             f"{settings.API_BASE}/api/zumex-home/", 
             headers=headers, 
             timeout=5
+        
         )
         
         if response.status_code == 200:
-            try:
-                # If this is HTML, it will fail gracefully here
-                data = response.json()
-                recent_projects = data.get('projects', [])
-                testimonials = data.get('testimonials', [])
-            except ValueError:
-                # Log the mistake but let the page load anyway
-                logger.error(f"Expected JSON but got HTML. The API URL is incorrect. Snippet: {response.text[:200]}")
+            data = response.json()
+            recent_projects = data.get('projects', [])
+            testimonials = data.get('testimonials', [])
         else:
-            logger.warning(f"API returned status {response.status_code} on GET home-data.")
+            logger.warning(f"API returned status {response.status_code} on GET home-data. Response: {response.text}")
             
     except RequestException as e:
         logger.exception(f"Frontend failed to reach API for GET home-data : {e}")
@@ -99,5 +96,6 @@ def index(request: HttpRequest) -> HttpResponse:
         'recent_projects': recent_projects,
         'testimonials': testimonials,
     }
-    
-    return render(request, 'zumex/index.html', context)
+
+    return render(request, 'zumex/index.html', context) 
+
