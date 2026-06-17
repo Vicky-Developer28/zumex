@@ -741,31 +741,33 @@
                 </div>
                 <form class="space-y-6 flex flex-col justify-center" method="POST" action="{% url 'zumex:index' %}">
     {% csrf_token %}
+    
+
     <div class="grid sm:grid-cols-2 gap-6">
         <div>
-            <label class="block text-sm font-semibold mb-2 text-white/80">Name <span class="text-red-500">*</span></label>
-            <input name="name" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Enter Your Name" type="text" required/>
+            <label for="name" class="block text-sm font-semibold mb-2 text-white/80">Name <span class="text-red-500">*</span></label>
+            <input id="name" name="name" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Enter Your Name" type="text" required/>
         </div>
         <div>
-            <label class="block text-sm font-semibold mb-2 text-white/80">Email</label>
+            <label for="email" class="block text-sm font-semibold mb-2 text-white/80">Email</label>
             <!-- Removed 'required' attribute here -->
-            <input name="email" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Enter Your Mail (Optional)" type="email"/>
+            <input id="email" name="email" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Enter Your Mail (Optional)" type="email"/>
         </div>
     </div>
 
     <div>
-        <label class="block text-sm font-semibold mb-2 text-white/80">Phone Number <span class="text-red-500">*</span></label>
-        <input name="phone" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="+91 00000 000XX" type="tel" required/>
+        <label for="phone" class="block text-sm font-semibold mb-2 text-white/80">Phone Number <span class="text-red-500">*</span></label>
+        <input id="phone" name="phone" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="+91 00000 000XX" type="tel" required/>
     </div>
 
     <div>
-        <label class="block text-sm font-semibold mb-2 text-white/80">Subject <span class="text-red-500">*</span></label>
-        <input name="subject" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Inquiry Subject" type="text" required/>
+        <label for="subject" class="block text-sm font-semibold mb-2 text-white/80">Subject <span class="text-red-500">*</span></label>
+        <input id="subject" name="subject" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base text-white placeholder-white/30" placeholder="Inquiry Subject" type="text" required/>
     </div>
 
     <div>
-        <label class="block text-sm font-semibold mb-2 text-white/80">Message <span class="text-red-500">*</span></label>
-        <textarea name="message" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base resize-none text-white placeholder-white/30" placeholder="Tell us about your project..." rows="4" required></textarea>
+        <label for="message" class="block text-sm font-semibold mb-2 text-white/80">Message <span class="text-red-500">*</span></label>
+        <textarea id="message" name="message" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all text-base resize-none text-white placeholder-white/30" placeholder="Tell us about your project..." rows="4" required></textarea>
     </div>
 
     <div class="flex items-start mt-2">
