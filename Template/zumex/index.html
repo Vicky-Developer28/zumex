@@ -54,22 +54,40 @@
         border-radius: 50%;
         pointer-events: none;
     }
-    .glow-arc::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: radial-gradient(ellipse at center, transparent 46%, rgba(255,255,255,0.08) 49%, rgba(243,232,255,0.25) 51%, rgba(224,193,255,0.45) 53%, rgba(195,138,255,0.90) 55%, rgba(170,112,255,1) 57%, rgba(137,86,255,0.85) 60%, rgba(95,55,220,0.40) 66%, transparent 76%);
-        filter: blur(70px);
-    }
-    .glow-arc::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: radial-gradient(ellipse at center, transparent 53%, rgba(255,255,255,0.35) 54.5%, rgba(255,255,255,0.15) 56%, transparent 60%);
-        filter: blur(14px);
-    }
+.glow-arc::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 46%,
+        rgba(168, 85, 247, 0.08) 49%,
+        rgba(192, 132, 252, 0.25) 51%,
+        rgba(216, 180, 254, 0.45) 53%,
+        rgba(168, 85, 247, 0.90) 55%,
+        rgba(147, 51, 234, 1) 57%,
+        rgba(126, 34, 206, 0.85) 60%,
+        rgba(88, 28, 135, 0.40) 66%,
+        transparent 76%
+    );
+    filter: blur(70px);
+}
+
+.glow-arc::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 53%,
+        rgba(233, 213, 255, 0.55) 54.5%,
+        rgba(196, 181, 253, 0.25) 56%,
+        transparent 60%
+    );
+    filter: blur(14px);
+}
     .hero-content {
         position: relative;
         z-index: 5;
